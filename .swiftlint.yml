@@ -1,0 +1,11 @@
+included:
+  - Sources
+  - Tests
+
+disabled_rules:
+  - line_length
+
+### rule configuration
+
+type_name:
+  allowed_symbols: ["_"]

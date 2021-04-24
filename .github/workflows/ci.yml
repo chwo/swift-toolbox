@@ -23,6 +23,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    env:
+      MINT_PATH: ${{ github.workspace }}/mint
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -32,6 +35,21 @@ jobs:
         with:
           # ruby version is set via '.ruby-version' file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Cache Mint packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.MINT_PATH }}
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          restore-keys: ${{ runner.os }}-mint-
+
+      - name: Setup Mint
+        run: |
+          brew install mint
+          mint bootstrap
+
+      - name: Run SwiftLint
+        run: mint run swiftlint
 
       - name: Run Danger
         env:
