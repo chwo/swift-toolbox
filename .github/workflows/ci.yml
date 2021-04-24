@@ -19,3 +19,16 @@ jobs:
 
       - name: Run tests
         run: swift test -v
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby Gems
+        uses: ruby/setup-ruby@v1
+        with:
+          # ruby version is set via '.ruby-version' file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
