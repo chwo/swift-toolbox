@@ -32,3 +32,6 @@ jobs:
         with:
           # ruby version is set via '.ruby-version' file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Run Danger
+        run: bundle exec danger
