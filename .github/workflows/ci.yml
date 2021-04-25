@@ -48,10 +48,7 @@ jobs:
           brew install mint
           mint bootstrap
 
-      - name: Run SwiftLint
-        run: mint run swiftlint
-
-      - name: Run Danger
+      - name: Run SwiftLint via Danger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bundle exec danger
