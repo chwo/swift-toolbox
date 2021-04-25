@@ -19,3 +19,36 @@ jobs:
 
       - name: Run tests
         run: swift test -v
+
+  lint:
+    runs-on: macos-latest
+
+    env:
+      MINT_PATH: ${{ github.workspace }}/mint
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby Gems
+        uses: ruby/setup-ruby@v1
+        with:
+          # ruby version is set via '.ruby-version' file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Cache Mint packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.MINT_PATH }}
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          restore-keys: ${{ runner.os }}-mint-
+
+      - name: Setup Mint
+        run: |
+          brew install mint
+          mint bootstrap
+
+      - name: Run SwiftLint via Danger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bundle exec danger
