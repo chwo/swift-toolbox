@@ -21,7 +21,7 @@ jobs:
         run: swift test -v
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     env:
       MINT_PATH: ${{ github.workspace }}/mint
