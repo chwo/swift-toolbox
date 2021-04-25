@@ -8,12 +8,16 @@
 import Foundation
 
 public extension Bundle {
+    private func info(forKey key: String) -> String {
+        object(forInfoDictionaryKey: key) as? String ?? ""
+    }
+
     var buildNumber: String {
-        object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        info(forKey: "CFBundleVersion")
     }
 
     var shortVersion: String {
-        object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        info(forKey: "CFBundleShortVersionString")
     }
 
     var version: String {
@@ -21,6 +25,6 @@ public extension Bundle {
     }
 
     var displayName: String {
-        object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+        info(forKey: "CFBundleDisplayName")
     }
 }
